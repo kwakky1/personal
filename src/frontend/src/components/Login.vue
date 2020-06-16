@@ -23,7 +23,7 @@
         name : 'Login',
         methods : {
             login() {
-                this.$store.dispatch('/login/find',{userId : document.getElementById('userId').value, password : document.getElementById('password').value})
+                this.$store.dispatch('login/find',{userId : document.getElementById('userId').value, password : document.getElementById('password').value})
             }
         }
     }

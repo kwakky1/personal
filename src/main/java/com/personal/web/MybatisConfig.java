@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
-@MapperScan(basePackages= {"com.personal.demo.web"})
+@MapperScan(basePackages= {"com.personal.web"})
 @EnableTransactionManagement
 public class MybatisConfig {
 
