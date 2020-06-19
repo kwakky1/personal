@@ -12,18 +12,22 @@
                 <input id="userId" type="text" placeholder="username"/>
                 <input id="password" type="password" placeholder="password"/>
                 <button @click="login" @keyup.enter="login">login</button>
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
+                <p class="message">Not registered? <a @click="create" href="#">Create an account</a></p>
             </form>
         </div>
     </div>
 </template>
 
 <script>
+    import router from '@/router'
     export default {
         name : 'Login',
         methods : {
             login() {
                 this.$store.dispatch('login/find',{userId : document.getElementById('userId').value, password : document.getElementById('password').value})
+            },
+            create() {
+                router.push('/join')
             }
         }
     }

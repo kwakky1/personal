@@ -14,39 +14,45 @@ public class Crawler {
     @Autowired CarRepository carRepository;
     public void oldCar() {
         System.out.println("크롤링시작");
-        try {
-            String url = "https://www.kbchachacha.com/public/search/main.kbc#!?page=2&sort=-orderDate&gas=004007";
-            Connection.Response homepage = Jsoup.connect(url).method(Connection.Method.GET)
-                    .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36\"")
-                    .execute();
-            Document d = homepage.parse();
-            System.out.println(d);
-            Elements img = d.select("img.thumb UIimageScrollLoad");
-            Elements manufacturer = d.select("span.cls>strong");
-            Elements name = d.select("span.cls>em");
-            Elements trim = d.select("span.dtl>strong");
-            Elements year = d.select("span.yer");
-            Elements km = d.select("span.km");
-            Elements local = d.select("span.loc");
-            System.out.println("지역 : " + d.select("span.loc"));
-            Elements price = d.select("td.prc_hs>strong");
-            Car car = null;
-            for (int i = 0; i < year.size(); i++) {
-                car = new Car();
-                car.setCarSeq(Long.valueOf((i+1)));
-                car.setImg(img.get(i).select("img").attr("src"));
-                car.setManufacturer(manufacturer.get(i).text());
-                car.setName(name.get(i).text());
-                car.setTrim(trim.get(i).text());
-                car.setYear(year.get(i).text());
-                car.setKm(km.get(i).text());
-                car.setLocal(local.get(i).text());
-                car.setPrice(price.get(i).text());
-                carRepository.save(car);
-                System.out.println(car.toString());
+        for(int j=1;j<21;j++){
+            try {
+                String url = "https://www.bobaedream.co.kr/mycar/mycar_list.php?gubun=I&page="+j+"&order=S11&view_size=70";
+                Connection.Response homepage = Jsoup.connect(url).method(Connection.Method.GET)
+                        .userAgent("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36\"")
+                        .execute();
+                Document d = homepage.parse();
+                Elements img = d.select("a.img.w164");
+                Elements name = d.select("p.tit>a");
+                Elements year = d.select("div.mode-cell.year>span");
+                Elements km = d.select("div.mode-cell.km>span");
+                Elements fuel = d.select("div.mode-cell.fuel>span");
+                Elements price = d.select("em.cr");
+                System.out.println("이미지: "+img.get(0));
+                System.out.println("이름: "+name.get(0));
+                System.out.println("년도: "+year.get(0));
+                System.out.println("키로: "+km.get(0));
+                System.out.println("연료: "+fuel.get(0));
+                System.out.println("가격: "+price.get(0));
+                Car car = null;
+                for (int i = 0; i < name.size(); i++) {
+                    car = new Car();
+                    car.setCarSeq(Long.valueOf(String.valueOf(i)));
+                    car.setImg("http:"+img.get(i).select("img").attr("src"));
+                    car.setName(name.get(i).text());
+                    car.setYear(year.get(i).text());
+                    car.setKm(km.get(i).text());
+                    car.setFuel(fuel.get(i).text());
+                    if(price.get(i).text()!=null) {
+                        car.setPrice(price.get(i).text());
+                    }else{
+                        car.setPrice("상담후결정");
+                    }
+                    carRepository.save(car);
+                }
+            } catch (Exception e) {
+                System.out.println("에러발생 : " + e);
             }
-        } catch (Exception e) {
-            System.out.println("에러발생");
         }
+
     }
 }

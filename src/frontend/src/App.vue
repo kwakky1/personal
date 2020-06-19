@@ -85,7 +85,7 @@
               style="width: 300px"
               class="ml-0 pl-4"
       >
-        <span class="hidden-sm-and-down">Electric Car</span>
+        <span @click="home" class="hidden-sm-and-down">Electric Car</span>
       </v-toolbar-title>
       <v-text-field
               flat
@@ -245,6 +245,10 @@
   export default {
     props: {
       source: String,
+    },
+    methods :{
+      home(){
+      }
     },
     data: () => ({
       dialog: false,
