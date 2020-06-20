@@ -38,6 +38,6 @@ public class UserController {
     @GetMapping("/check/{userId}")
     public Boolean idCheck(@PathVariable("userId") String userId) {
         System.out.println(userId);
-        return (userRepository.findByUserId(userId)!=null)? true:false;
+        return userRepository.findByUserId(userId)!=null ? true : false;
     }
 }

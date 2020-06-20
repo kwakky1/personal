@@ -1,13 +1,14 @@
 package com.personal.web.entity;
 
+import lombok.Builder;
 import lombok.Data;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
-@Entity(name="car")
+@Entity
+@NoArgsConstructor
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,4 +25,13 @@ public class Car {
     private String fuel;
     @Column(length = 50)
     private String price;
+    @Builder
+    public Car(String img,String name,String year,String km,String fuel,String price) {
+        this.img = img;
+        this.name = name;
+        this.year = year;
+        this.km = km;
+        this.fuel = fuel;
+        this.price = price;
+    }
 }
