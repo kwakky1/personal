@@ -1,4 +1,4 @@
-package com.personal.web.mappers;
+package com.personal.web;
 
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

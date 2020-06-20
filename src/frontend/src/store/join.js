@@ -5,18 +5,38 @@ const state = {
 }
 const actions = {
     async find({commit},payload){
-        alert("Join 액션에 payload 들어옴 :  " + payload)
-        axios.post(`${state.context}/signin`,payload,{
+        alert(payload.userId + payload.password + payload.email)
+        axios.post(`${state.context}/user/join`,payload,{
             authorization: "JWT fefege..",
             Accept: "application/json",
             ContentType : "application/json"})
             .then(({data})=>{
-                commit("FIND",data)
-                router.push('/login')
+                alert(data)
+                commit("JOIN",data)
+                data? router.push('/login') : router.push('/join')
+                alert(data? "아이디 중복":"회원가입 성공")
+            })
+            .catch(()=>{
+                alert('통신실패')
+            })
+    },
+    async check({commit},payload){
+        axios.get(`${state.context}/user/check/${payload.userId}`)
+            .then(({data})=>{
+                commit("CHECK",data)
+            })
+            .catch(()=>{
+                alert('통신실패')
             })
     }
 }
 const mutations = {
+    CHECK(state, data){
+        alert(data? "아이디가 중복입니다.":"회원가입가능!")
+    },
+    JOIN(state, data){
+        state.join = data;
+    }
 
 }
 export default {

@@ -1,27 +1,37 @@
 <template>
         <div class="form">
             <form class="register-form">
-                <input type="text" placeholder="name"/>
-                <input type="password" placeholder="password"/>
-                <input type="text" placeholder="email address"/>
-                <button @click="create" @keyup.enter="create">create</button>
+                <input id="userId" type="text" v-model='id' placeholder="name"/> <button @click="idCheck">아이디중복체크</button>
+                <input id="password" type="password" placeholder="password"/>
+                <input id="email" type="text" placeholder="email address"/>
+                <button @click="join" @keyup.enter="join">create</button>
                 <p class="message">Already registered? <a @click="login" href="#">Sign In</a></p>
             </form>
         </div>
 </template>
 
 <script>
-    import router from '@/router'
-    export default {
-        methods:{
-            login(){
-                router.push('/login')
-            },
-            create() {
-                this.$store.dispatch('sign/find',{userId : document.getElementById('userId').value, password : document.getElementById('password').value})
-            }
+import router from '@/router'
+export default {
+    data(){
+        return {
+            id:""
+        }
+    },
+    methods:{
+        login(){
+            router.push('/login')
+        },
+        join() {
+            this.$store.dispatch('join/find',{userId : document.getElementById('userId').value,
+                                                            password : document.getElementById('password').value,
+                                                            email : document.getElementById('email').value})
+        },
+        idCheck(){
+            this.$store.dispatch('join/check', {userId : this.id})
         }
     }
+}
 </script>
 
 <style scoped>

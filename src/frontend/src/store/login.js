@@ -6,7 +6,10 @@ const state = {
 const actions = {
     async find({commit},payload){
         alert("액션에 payload 들어옴 :  " + payload)
-        axios.get(`${state.context}/login/${payload.userId}`)
+        axios.post(`${state.context}/user`,payload,{
+            authorization: "JWT fefege..",
+            Accept: "application/json",
+            ContentType : "application/json"})
             .then(({data})=>{
                 commit("FIND",data)
                 router.push('/car')
