@@ -14,12 +14,13 @@ public class UserController {
     @Autowired CarRepository carRepository;
     @Autowired UserRepository userRepository;
 
-    @PostMapping("/")
+    @PostMapping("/login")
     public boolean login(@RequestBody User user) {
+        System.out.println("자바들어");
         boolean result = false;
         User u = userRepository.findByUserId(user.getUserId());
         if(u != null){
-            if(user.getUserId().equals(u.getUserId()) ||
+            if(user.getUserId().equals(u.getUserId()) &&
                user.getPassword().equals(u.getPassword())){
                 result = true;
             } else {
@@ -28,6 +29,7 @@ public class UserController {
         } else {
             result = false;
         }
+        System.out.println("자바 왔어요!");
         return result;
     }
     @PostMapping("/join")

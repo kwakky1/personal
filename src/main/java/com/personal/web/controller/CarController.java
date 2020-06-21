@@ -19,6 +19,7 @@ public class CarController {
     Crawler crawler;
     @GetMapping("/list")
     public List<Car> findCar(){
+        System.out.println("자바들어옴");
         if(carRepository.count()==0){crawler.oldCar();}
         return carRepository.findAll();
     }

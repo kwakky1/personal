@@ -1,19 +1,10 @@
 <template>
     <div class="login-page">
         <div class="form">
-            <form class="register-form">
-                <input type="text" placeholder="name"/>
-                <input type="password" placeholder="password"/>
-                <input type="text" placeholder="email address"/>
-                <button>create</button>
-                <p class="message">Already registered? <a href="#">Sign In</a></p>
-            </form>
-            <form class="login-form">
                 <input id="userId" type="text" placeholder="username"/>
                 <input id="password" type="password" placeholder="password"/>
-                <button @click="login" @keyup.enter="login">login</button>
+                <button @click="login" @keyup.enter="login" >login</button>
                 <p class="message">Not registered? <a @click="make" href="#">Create an account</a></p>
-            </form>
         </div>
     </div>
 </template>
@@ -21,10 +12,9 @@
 <script>
     import router from '@/router'
     export default {
-        name : 'Login',
         methods : {
             login() {
-                this.$store.dispatch('login/find',{userId : document.getElementById('userId').value, password : document.getElementById('password').value})
+                this.$store.dispatch('login/login',{userId : document.getElementById('userId').value, password : document.getElementById('password').value})
             },
             make() {
                 router.push('/join')
@@ -86,24 +76,6 @@
         color: #4CAF50;
         text-decoration: none;
     }
-    .form .register-form {
-        display: none;
-    }
-    .container {
-        position: relative;
-        z-index: 1;
-        max-width: 300px;
-        margin: 0 auto;
-    }
-    .container:before, .container:after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-    .container .info {
-        margin: 50px auto;
-        text-align: center;
-    }
     .container .info h1 {
         margin: 0 0 15px;
         padding: 0;
@@ -118,9 +90,6 @@
     .container .info span a {
         color: #000000;
         text-decoration: none;
-    }
-    .container .info span .fa {
-        color: #EF3B3A;
     }
     body {
         background: #76b852; /* fallback for old browsers */

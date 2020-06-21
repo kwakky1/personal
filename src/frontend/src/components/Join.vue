@@ -1,10 +1,12 @@
 <template>
         <div class="form">
             <form class="register-form">
-                <input id="userId" type="text" v-model='id' placeholder="name"/> <button @click="idCheck">아이디중복체크</button>
+                <div>{{idCheck}}</div>
+                <input id="userId" type="text" v-model='id' placeholder="name" :disabled="idCheck"/>
+                <button @click="idChecker">아이디중복체크</button>
                 <input id="password" type="password" placeholder="password"/>
                 <input id="email" type="text" placeholder="email address"/>
-                <button @click="join" @keyup.enter="join">create</button>
+                <button @click="join" @keyup.enter="join" >create</button>
                 <p class="message">Already registered? <a @click="login" href="#">Sign In</a></p>
             </form>
         </div>
@@ -12,11 +14,17 @@
 
 <script>
 import router from '@/router'
+import {mapState} from 'vuex'
 export default {
     data(){
         return {
             id:""
         }
+    },
+    computed:{
+        ...mapState ({
+            idCheck : state => state.join.idCheck
+        })
     },
     methods:{
         login(){
@@ -27,8 +35,9 @@ export default {
                                                             password : document.getElementById('password').value,
                                                             email : document.getElementById('email').value})
         },
-        idCheck(){
-            this.$store.dispatch('join/check', {userId : this.id})
+        idChecker(){
+            this.$store.dispatch('join/check', {userId : this.id});
+
         }
     }
 }
@@ -68,6 +77,18 @@ export default {
         text-transform: uppercase;
         outline: 0;
         background: #4CAF50;
+        width: 100%;
+        border: 0;
+        padding: 15px;
+        color: #FFFFFF;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .nonIdCheck {
+        font-family: "Roboto", sans-serif;
+        text-transform: uppercase;
+        outline: 0;
+        background: #9c9c9c;
         width: 100%;
         border: 0;
         padding: 15px;

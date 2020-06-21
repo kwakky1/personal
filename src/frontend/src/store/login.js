@@ -1,31 +1,34 @@
 import axios from 'axios'
-import router from '@/router'
+import router from '@/router';
 const state = {
     context : "http://localhost:5000",
     find : false
 }
 const actions = {
-    async find({commit},payload){
-        axios.post(`${state.context}/user`,payload,{
+    async login({commit},payload){
+        console.log(payload.userId)
+        axios.post(`${state.context}/user/login`,payload,{
             authorization: "JWT fefege..",
             Accept: "application/json",
             ContentType : "application/json"})
             .then(({data})=>{
-                if(data===true){
+                console.log(data)
+                if(data === true){
+                    commit("LOGIN",data)
+                    alert("로그인성공")
                     router.push('/car')
-                    commit("FIND",data)
                 } else if (data===false){
                     alert("로그인실패")
                 }
             })
-            .catch((e)=>{
-                e.error
+            .catch(()=>{
+                alert("통신실패")
             })
     }
 }
 const mutations = {
-    FIND(state, data){
-        state.find = data
+    LOGIN(state,data){
+        alert(data)
     }
 }
 export default {
